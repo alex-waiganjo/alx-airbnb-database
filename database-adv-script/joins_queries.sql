@@ -1,4 +1,4 @@
-
+-- Inrer Join
 SELECT 
     b.booking_id,
     CONCAT(u.first_name, ' ', u.last_name) AS user_name,
@@ -11,7 +11,10 @@ SELECT
 FROM 
     Booking b
 INNER JOIN 
-    User u ON b.user_id = u.user_id;SELECT 
+    User u ON b.user_id = u.user_id;
+    
+-- Left Join
+SELECT 
     p.property_id,
     p.name AS property_name,
     p.location,
@@ -28,7 +31,7 @@ ORDER BY
     r.rating DESC, 
     p.name ASC;
 
-
+-- Outter Join
 SELECT
     u.user_id AS user_id,
     CONCAT(u.first_name, ' ', u.last_name) AS user_name,
