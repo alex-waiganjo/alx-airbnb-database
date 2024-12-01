@@ -1,38 +1,45 @@
---INNER JOIN - Get all bookings and the users
+
 SELECT 
-    users.id AS user_id, 
-    users.name AS user_name, 
-    bookings.id AS booking_id, 
-    bookings.date AS booking_date
+    b.booking_id,
+    CONCAT(u.first_name, ' ', u.last_name) AS user_name,
+    u.email AS user_email,
+    b.property_id,
+    b.start_date,
+    b.end_date,
+    b.total_price,
+    b.status
 FROM 
-    users
+    Booking b
 INNER JOIN 
-    bookings 
-ON 
-    users.id = bookings.user_id;
-
---LEFT JOIN - Get all properties, reviews
-SELECT 
-    properties.id AS property_id, 
-    properties.name AS property_name, 
-    reviews.id AS review_id, 
-    reviews.rating AS review_rating
+    User u ON b.user_id = u.user_id;SELECT 
+    p.property_id,
+    p.name AS property_name,
+    p.location,
+    p.pricepernight,
+    r.review_id,
+    r.rating,
+    r.comment,
+    r.created_at AS review_date
 FROM 
-    properties
+    Property p
 LEFT JOIN 
-    reviews 
-ON 
-    properties.id = reviews.property_id;
+    Review r ON p.property_id = r.property_id
+ORDER BY 
+    r.rating DESC, 
+    p.name ASC;
 
---FULL OUTER JOIN - Get all users, bookings
-SELECT 
-    users.id AS user_id, 
-    users.name AS user_name, 
-    bookings.id AS booking_id, 
-    bookings.date AS booking_date
-FROM 
-    users
-FULL OUTER JOIN 
-    bookings 
-ON 
-    users.id = bookings.user_id;
+
+SELECT
+    u.user_id AS user_id,
+    CONCAT(u.first_name, ' ', u.last_name) AS user_name,
+    u.email AS user_email,
+    b.booking_id AS booking_id,
+    b.property_id,
+    b.start_date,
+    b.end_date,
+    b.total_price,
+    b.status
+FROM
+    User u
+FULL OUTER JOIN
+    Booking b ON u.user_id = b.user_id;
