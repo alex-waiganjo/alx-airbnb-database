@@ -1,4 +1,4 @@
---Non-Correlated Subquery - Find all properties where the average rating is greater than 4.0.
+--Get all properties with AVG rating > 4
 SELECT 
     id, 
     name 
