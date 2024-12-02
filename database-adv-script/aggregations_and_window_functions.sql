@@ -1,20 +1,40 @@
 -- Get total bookings by each user
 SELECT 
-    user_id, 
-    COUNT(*) AS total_bookings
+    User.user_id,
+    User.first_name,
+    User.last_name,
+    COUNT(Booking.booking_id) AS total_bookings
 FROM 
-    bookings
+    User
+LEFT JOIN 
+    Booking 
+ON 
+    User.user_id = Booking.user_id
 GROUP BY 
-    user_id;
+    User.user_id, User.first_name, User.last_name
+ORDER BY 
+    total_bookings DESC;
+
 
 -- Ranking by total bookings
+WITH PropertyBookings AS (
+    SELECT 
+        Property.property_id,
+        Property.name AS property_name,
+        COUNT(Booking.booking_id) AS total_bookings
+    FROM 
+        Property
+    LEFT JOIN 
+        Booking 
+    ON 
+        Property.property_id = Booking.property_id
+    GROUP BY 
+        Property.property_id, Property.name
+)
 SELECT 
-    property_id, 
-    COUNT(*) AS total_bookings, 
-    RANK() OVER (ORDER BY COUNT(*) DESC) AS rank
+    property_id,
+    property_name,
+    total_bookings,
+    ROW_NUMBER() OVER (ORDER BY total_bookings DESC) AS rank
 FROM 
-    bookings
-GROUP BY 
-    property_id
-ORDER BY 
-    rank;
+    PropertyBookings;

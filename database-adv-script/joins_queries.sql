@@ -33,16 +33,16 @@ ORDER BY
 
 -- Outter Join
 SELECT
-    u.user_id AS user_id,
-    CONCAT(u.first_name, ' ', u.last_name) AS user_name,
-    u.email AS user_email,
-    b.booking_id AS booking_id,
-    b.property_id,
-    b.start_date,
-    b.end_date,
-    b.total_price,
-    b.status
+    User.user_id AS user_id,
+    CONCAT(User.first_name, ' ', User.last_name) AS user_name,
+    User.email AS user_email,
+    Booking.booking_id AS booking_id,
+    Booking.property_id,
+    Booking.start_date,
+    Booking.end_date,
+    Booking.total_price,
+    Booking.status
 FROM
-    User u
+    User
 FULL OUTER JOIN
-    Booking b ON u.user_id = b.user_id;
+    Booking  ON User.user_id = Booking.user_id;
