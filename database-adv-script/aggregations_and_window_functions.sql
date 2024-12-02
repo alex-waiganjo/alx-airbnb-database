@@ -35,6 +35,11 @@ SELECT
     property_id,
     property_name,
     total_bookings,
-    ROW_NUMBER() OVER (ORDER BY total_bookings DESC) AS rank
+    CASE 
+        WHEN total_bookings > 10 THEN 
+            ROW_NUMBER() OVER (ORDER BY total_bookings DESC) -- Use ROW_NUMBER if total bookings exceed 10
+        ELSE 
+            RANK() OVER (ORDER BY total_bookings DESC) -- Use RANK otherwise
+    END AS rank
 FROM 
     PropertyBookings;
